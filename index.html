@@ -57,20 +57,6 @@
     .included-card:hover{border-color:rgba(230,57,70,.4);background:rgba(230,57,70,.05)}
     .check{color:var(--red);font-size:1.2rem;flex-shrink:0}
 
-    /* ---- ASMR CARDS ---- */
-    .included-card{cursor:pointer;user-select:none;position:relative;overflow:hidden}
-    .asmr-hint{position:absolute;top:8px;right:10px;font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.04em;text-transform:uppercase;font-weight:600;transition:color .2s}
-    .included-card:hover .asmr-hint{color:var(--red)}
-    .sound-icon{font-size:1rem;flex-shrink:0;opacity:.5;transition:opacity .2s,transform .2s}
-    .included-card:hover .sound-icon{opacity:1}
-    .included-card.playing{border-color:rgba(230,57,70,.7)!important;background:rgba(230,57,70,.1)!important}
-    .included-card.playing .sound-icon{animation:pulse-icon .3s ease}
-    .ripple{position:absolute;border-radius:50%;background:rgba(230,57,70,.35);transform:scale(0);animation:ripple-out .6s ease-out forwards;pointer-events:none}
-    @keyframes ripple-out{to{transform:scale(4);opacity:0}}
-    @keyframes pulse-icon{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
-    .asmr-label{text-align:center;color:rgba(255,255,255,.4);font-size:.78rem;margin-top:-32px;margin-bottom:32px;letter-spacing:.08em}
-    .asmr-label span{color:var(--red)}
-
     /* ---- WHY SECTION ---- */
     .why-section{background:linear-gradient(180deg,#1a1d27 0%,#141620 100%);position:relative;overflow:hidden}
     .why-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=40');background-size:cover;background-position:center;opacity:.07;pointer-events:none}
@@ -169,20 +155,20 @@
   <div class="urgency-strip">Don't drive on winter tires past spring &mdash; it reduces their lifespan and affects handling.&nbsp;<a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services">Book before slots fill up!</a></div>
 
   <!-- WHAT'S INCLUDED -->
-  <section class="included-section">
-    <div class="container">
+  <section class="included-section" style="position:relative;overflow:hidden">
+    <canvas id="race-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.18;pointer-events:none;z-index:0"></canvas>
+    <div class="container" style="position:relative;z-index:1">
       <h2 class="section-title fade-in">What's Included</h2>
       <p class="section-subtitle fade-in">Every tire swap at Mountain Garage is done right &mdash; no shortcuts.</p>
-      <p class="asmr-label fade-in">&#128266; <span>Click any card</span> to hear what it sounds like</p>
       <div class="included-grid">
-        <div class="included-card fade-in" data-sound="impact" tabindex="0"><span class="sound-icon">&#128296;</span><span class="check">&#10004;</span> Tire Removal &amp; Mounting<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="inflate" tabindex="0"><span class="sound-icon">&#128168;</span><span class="check">&#10004;</span> Balancing Included<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="click" tabindex="0"><span class="sound-icon">&#128270;</span><span class="check">&#10004;</span> Full Tire Inspection<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="torque" tabindex="0"><span class="sound-icon">&#128295;</span><span class="check">&#10004;</span> Proper Torque Specs<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="ratchet" tabindex="0"><span class="sound-icon">&#9881;&#65039;</span><span class="check">&#10004;</span> European, Japanese &amp; American Vehicles<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="beep" tabindex="0"><span class="sound-icon">&#128268;</span><span class="check">&#10004;</span> TPMS Sensor Check &amp; Reset<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="whoosh" tabindex="0"><span class="sound-icon">&#9889;</span><span class="check">&#10004;</span> Same Day Fast Turnaround<span class="asmr-hint">&#9654; tap</span></div>
-        <div class="included-card fade-in" data-sound="deep" tabindex="0"><span class="sound-icon">&#127968;</span><span class="check">&#10004;</span> Mountain Road Ready Inspection<span class="asmr-hint">&#9654; tap</span></div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> Tire Removal &amp; Mounting</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> Balancing Included</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> Full Tire Inspection</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> Proper Torque Specs</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> European, Japanese &amp; American Vehicles</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> TPMS Sensor Check &amp; Reset</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> Same Day Fast Turnaround</div>
+        <div class="included-card fade-in"><span class="check">&#10004;</span> Mountain Road Ready Inspection</div>
       </div>
     </div>
   </section>
@@ -269,143 +255,171 @@
   </script>
 <script>
 (function(){
-  var ctx;
-  function getCtx(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();return ctx;}
+  var canvas = document.getElementById('race-canvas');
+  if(!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H;
 
-  // --- Sound generators ---
-  function playImpact(){
-    // Air impact wrench - rapid burst clicks
-    var c=getCtx(), t=c.currentTime;
-    for(var i=0;i<18;i++){
-      var g=c.createGain(); var o=c.createOscillator();
-      var bq=c.createBiquadFilter(); bq.type='bandpass'; bq.frequency.value=180+Math.random()*120; bq.Q.value=0.8;
-      var buf=c.createBuffer(1,c.sampleRate*0.018,c.sampleRate);
-      var d=buf.getChannelData(0); for(var j=0;j<d.length;j++)d[j]=(Math.random()*2-1)*Math.pow(1-j/d.length,1.5);
-      var src=c.createBufferSource(); src.buffer=buf;
-      src.connect(bq); bq.connect(g); g.connect(c.destination);
-      var st=t+i*0.042+Math.random()*0.008;
-      g.gain.setValueAtTime(0.55,st); g.gain.exponentialRampToValueAtTime(0.001,st+0.018);
-      src.start(st); src.stop(st+0.02);
-    }
+  function resize(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width = rect.width;
+    H = canvas.height = rect.height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Road stripes (center lane dashes)
+  var stripes = [];
+  var STRIPE_COUNT = 14;
+  for(var i = 0; i < STRIPE_COUNT; i++){
+    stripes.push({ y: (H / STRIPE_COUNT) * i });
   }
 
-  function playInflate(){
-    // Air hiss/inflate sound
-    var c=getCtx(), t=c.currentTime;
-    var buf=c.createBuffer(1,c.sampleRate*1.2,c.sampleRate);
-    var d=buf.getChannelData(0); for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;
-    var src=c.createBufferSource(); src.buffer=buf;
-    var bq=c.createBiquadFilter(); bq.type='bandpass'; bq.frequency.value=4200; bq.Q.value=0.4;
-    var bq2=c.createBiquadFilter(); bq2.type='highpass'; bq2.frequency.value=3000;
-    var g=c.createGain();
-    src.connect(bq); bq.connect(bq2); bq2.connect(g); g.connect(c.destination);
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.4,t+0.08);
-    g.gain.linearRampToValueAtTime(0.35,t+0.6); g.gain.exponentialRampToValueAtTime(0.001,t+1.2);
-    src.start(t); src.stop(t+1.3);
-  }
-
-  function playClick(){
-    // Metallic click
-    var c=getCtx(), t=c.currentTime;
-    var o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(1200,t); o.frequency.exponentialRampToValueAtTime(200,t+0.04);
-    var g=c.createGain(); g.gain.setValueAtTime(0.6,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.08);
-    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+0.1);
-    // Add a tick
-    var o2=c.createOscillator(); o2.type='square'; o2.frequency.value=800;
-    var g2=c.createGain(); g2.gain.setValueAtTime(0.2,t); g2.gain.exponentialRampToValueAtTime(0.001,t+0.03);
-    o2.connect(g2); g2.connect(c.destination); o2.start(t); o2.stop(t+0.03);
-  }
-
-  function playTorque(){
-    // Deep torque grunt + click sequence
-    var c=getCtx(), t=c.currentTime;
-    for(var i=0;i<5;i++){
-      var buf=c.createBuffer(1,c.sampleRate*0.04,c.sampleRate);
-      var d=buf.getChannelData(0); for(var j=0;j<d.length;j++)d[j]=(Math.random()*2-1)*Math.pow(1-j/d.length,0.5);
-      var src=c.createBufferSource(); src.buffer=buf;
-      var bq=c.createBiquadFilter(); bq.type='lowpass'; bq.frequency.value=300+i*40;
-      var g=c.createGain(); var st=t+i*0.09;
-      g.gain.setValueAtTime(0.7,st); g.gain.exponentialRampToValueAtTime(0.001,st+0.04);
-      src.connect(bq); bq.connect(g); g.connect(c.destination);
-      src.start(st); src.stop(st+0.045);
-    }
-  }
-
-  function playRatchet(){
-    // Ratchet clicking sound
-    var c=getCtx(), t=c.currentTime;
-    var n=16;
-    for(var i=0;i<n;i++){
-      var o=c.createOscillator(); o.type='sawtooth';
-      o.frequency.value=300+Math.random()*200;
-      var g=c.createGain(); var st=t+i*0.055;
-      g.gain.setValueAtTime(0,st); g.gain.linearRampToValueAtTime(0.3,st+0.005);
-      g.gain.exponentialRampToValueAtTime(0.001,st+0.05);
-      o.connect(g); g.connect(c.destination); o.start(st); o.stop(st+0.06);
-    }
-  }
-
-  function playBeep(){
-    // TPMS electronic beep sequence
-    var c=getCtx(), t=c.currentTime;
-    [880,880,1320].forEach(function(freq,i){
-      var o=c.createOscillator(); o.type='sine'; o.frequency.value=freq;
-      var g=c.createGain(); var st=t+i*0.22;
-      g.gain.setValueAtTime(0,st); g.gain.linearRampToValueAtTime(0.35,st+0.01);
-      g.gain.setValueAtTime(0.35,st+0.13); g.gain.linearRampToValueAtTime(0,st+0.18);
-      o.connect(g); g.connect(c.destination); o.start(st); o.stop(st+0.2);
+  // Speed lines (side blur streaks)
+  var speedLines = [];
+  for(var s = 0; s < 22; s++){
+    speedLines.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      len: 18 + Math.random() * 55,
+      speed: 4 + Math.random() * 6,
+      alpha: 0.15 + Math.random() * 0.35,
+      side: Math.random() > 0.5 ? 1 : -1
     });
   }
 
-  function playWhoosh(){
-    // Fast whoosh / speed effect
-    var c=getCtx(), t=c.currentTime;
-    var buf=c.createBuffer(1,c.sampleRate*0.5,c.sampleRate);
-    var d=buf.getChannelData(0); for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;
-    var src=c.createBufferSource(); src.buffer=buf;
-    var bq=c.createBiquadFilter(); bq.type='bandpass';
-    bq.frequency.setValueAtTime(2000,t); bq.frequency.linearRampToValueAtTime(8000,t+0.25); bq.Q.value=1.5;
-    var g=c.createGain(); g.gain.setValueAtTime(0.5,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.5);
-    src.connect(bq); bq.connect(g); g.connect(c.destination);
-    src.start(t); src.stop(t+0.55);
+  // Small car silhouettes
+  var cars = [];
+  for(var c = 0; c < 3; c++){
+    cars.push({
+      x: W * (0.2 + c * 0.3),
+      y: -60 - Math.random() * H,
+      speed: 1.8 + Math.random() * 1.4,
+      w: 18, h: 32,
+      color: c === 0 ? '#E63946' : c === 1 ? '#ffffff' : '#f4a261',
+      wobble: Math.random() * Math.PI * 2
+    });
   }
 
-  function playDeep(){
-    // Deep rumble - mountain road check
-    var c=getCtx(), t=c.currentTime;
-    var buf=c.createBuffer(1,c.sampleRate*1.0,c.sampleRate);
-    var d=buf.getChannelData(0); for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;
-    var src=c.createBufferSource(); src.buffer=buf;
-    var bq=c.createBiquadFilter(); bq.type='lowpass'; bq.frequency.value=180; bq.Q.value=1.2;
-    var g=c.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.6,t+0.15);
-    g.gain.linearRampToValueAtTime(0.4,t+0.7); g.gain.exponentialRampToValueAtTime(0.001,t+1.0);
-    src.connect(bq); bq.connect(g); g.connect(c.destination);
-    src.start(t); src.stop(t+1.1);
-  }
+  var ROAD_LEFT = 0.18;
+  var ROAD_RIGHT = 0.82;
+  var speed = 3.2;
 
-  var sounds={impact:playImpact,inflate:playInflate,click:playClick,torque:playTorque,ratchet:playRatchet,beep:playBeep,whoosh:playWhoosh,deep:playDeep};
+  function drawRoad(){
+    // Road surface
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(W * ROAD_LEFT, 0, W * (ROAD_RIGHT - ROAD_LEFT), H);
 
-  function addRipple(el,e){
-    var r=document.createElement('span'); r.className='ripple';
-    var rect=el.getBoundingClientRect();
-    var x=(e.clientX||rect.left+rect.width/2)-rect.left;
-    var y=(e.clientY||rect.top+rect.height/2)-rect.top;
-    var size=Math.max(rect.width,rect.height)*1.5;
-    r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(x-size/2)+'px;top:'+(y-size/2)+'px';
-    el.appendChild(r); setTimeout(function(){r.remove();},700);
-  }
+    // Road edges (white lines)
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(W * ROAD_LEFT, 0); ctx.lineTo(W * ROAD_LEFT, H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(W * ROAD_RIGHT, 0); ctx.lineTo(W * ROAD_RIGHT, H); ctx.stroke();
 
-  document.querySelectorAll('.included-card[data-sound]').forEach(function(card){
-    function trigger(e){
-      var snd=card.getAttribute('data-sound');
-      if(sounds[snd]){try{sounds[snd]();}catch(err){}}
-      addRipple(card,e);
-      card.classList.add('playing');
-      setTimeout(function(){card.classList.remove('playing');},400);
+    // Gravel/shoulder
+    ctx.fillStyle = 'rgba(80,60,40,0.4)';
+    ctx.fillRect(0, 0, W * ROAD_LEFT, H);
+    ctx.fillRect(W * ROAD_RIGHT, 0, W * (1 - ROAD_RIGHT), H);
+
+    // Center dashed lane
+    var dashH = H * 0.11;
+    var gapH  = H * 0.07;
+    ctx.fillStyle = 'rgba(255,220,0,0.75)';
+    for(var i = 0; i < stripes.length; i++){
+      var sy = stripes[i].y % (dashH + gapH);
+      ctx.fillRect(W * 0.5 - 1.5, sy, 3, dashH);
     }
-    card.addEventListener('click',trigger);
-    card.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();trigger(e);}});
-  });
+
+    // Sub-lanes dashed (left & right of center)
+    ctx.fillStyle = 'rgba(255,255,255,0.22)';
+    var laneW = W * (ROAD_RIGHT - ROAD_LEFT);
+    for(var j = 0; j < stripes.length; j++){
+      var sy2 = stripes[j].y % (dashH + gapH);
+      ctx.fillRect(W * ROAD_LEFT + laneW * 0.33 - 1, sy2, 2, dashH);
+      ctx.fillRect(W * ROAD_LEFT + laneW * 0.66 - 1, sy2, 2, dashH);
+    }
+  }
+
+  function drawSpeedLines(){
+    for(var i = 0; i < speedLines.length; i++){
+      var sl = speedLines[i];
+      ctx.save();
+      ctx.globalAlpha = sl.alpha;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(sl.x, sl.y);
+      ctx.lineTo(sl.x + (sl.side * 6), sl.y + sl.len);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  function drawCar(car){
+    ctx.save();
+    ctx.globalAlpha = 0.7;
+    // Body
+    ctx.fillStyle = car.color;
+    ctx.beginPath();
+    ctx.roundRect(car.x - car.w/2, car.y, car.w, car.h, 4);
+    ctx.fill();
+    // Windshield
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(car.x - car.w/2 + 3, car.y + 6, car.w - 6, 8);
+    // Wheels
+    ctx.fillStyle = '#222';
+    ctx.fillRect(car.x - car.w/2 - 3, car.y + 4, 4, 7);
+    ctx.fillRect(car.x + car.w/2 - 1, car.y + 4, 4, 7);
+    ctx.fillRect(car.x - car.w/2 - 3, car.y + car.h - 11, 4, 7);
+    ctx.fillRect(car.x + car.w/2 - 1, car.y + car.h - 11, 4, 7);
+    ctx.restore();
+  }
+
+  function animate(){
+    ctx.clearRect(0, 0, W, H);
+    drawRoad();
+    drawSpeedLines();
+
+    // Update stripes
+    for(var i = 0; i < stripes.length; i++){
+      stripes[i].y += speed;
+    }
+
+    // Update speed lines
+    for(var s = 0; s < speedLines.length; s++){
+      var sl = speedLines[s];
+      sl.y += sl.speed;
+      if(sl.y > H){ sl.y = -sl.len; sl.x = Math.random() * W; }
+    }
+
+    // Update & draw cars
+    for(var c = 0; c < cars.length; c++){
+      var car = cars[c];
+      car.y += car.speed;
+      car.wobble += 0.012;
+      car.x += Math.sin(car.wobble) * 0.3;
+      // Keep in road
+      var minX = W * ROAD_LEFT + car.w;
+      var maxX = W * ROAD_RIGHT - car.w;
+      if(car.x < minX) car.x = minX;
+      if(car.x > maxX) car.x = maxX;
+      if(car.y > H + 80){
+        car.y = -80;
+        car.x = W * ROAD_LEFT + car.w + Math.random() * (W * (ROAD_RIGHT - ROAD_LEFT) - car.w * 2);
+        car.speed = 1.8 + Math.random() * 1.4;
+      }
+      drawCar(car);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // Only animate when section is visible
+  var section = canvas.parentElement;
+  var observer = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){ animate(); observer.disconnect(); }
+  }, {threshold: 0.1});
+  observer.observe(section);
 })();
 </script>
 </body>
