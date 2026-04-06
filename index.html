@@ -101,15 +101,41 @@
     .fade-in.visible{opacity:1;transform:none}
 
     /* ---- MOBILE ---- */
-    @media(max-width:600px){
-      .hero-ctas{flex-direction:column;align-items:stretch}
-      .btn-primary,.btn-secondary{justify-content:center}
-      .sticky-phone span{display:none}
-      .sticky-bottom{flex-direction:column;gap:8px;text-align:center}
-      .countdown-block{min-width:60px;padding:10px 14px}
-      .countdown-num{font-size:1.8rem}
-    }
-  
+        @media(max-width:600px){
+                body{overflow-x:hidden}
+                .hero{min-height:100svh;padding:100px 20px 120px}
+                .hero h1{font-size:clamp(2.2rem,11vw,3.2rem);line-height:1.1;margin-bottom:14px}
+                .hero p{font-size:.95rem;padding:0 8px;margin-bottom:20px}
+                .hero-ctas{flex-direction:column;align-items:stretch;gap:12px;width:100%;max-width:340px;margin:0 auto}
+                .btn-primary,.btn-secondary{justify-content:center;width:100%;font-size:1rem;padding:16px 20px}
+                .hero-trust{flex-direction:column;gap:6px;font-size:.8rem}
+                .sticky-phone span{display:none}
+                .sticky-bottom{flex-direction:column;gap:8px;text-align:center;padding:10px 16px}
+                .countdown-section{padding:28px 16px}
+                .countdown-title{font-size:.75rem;letter-spacing:.15em}
+                .countdown-grid{gap:8px;flex-wrap:nowrap}
+                .countdown-block{min-width:64px;padding:10px 12px;flex:1}
+                .countdown-num{font-size:2rem}
+                .countdown-label{font-size:.6rem}
+                .urgency-bar{font-size:.82rem;padding:12px 16px;line-height:1.5}
+                .services-section{padding:40px 20px}
+                .services-section h2{font-size:2rem}
+                .services-grid{grid-template-columns:1fr;gap:10px}
+                .service-item{padding:14px 16px;font-size:.9rem;white-space:normal;text-overflow:clip;overflow:visible}
+                .why-section{padding:40px 20px}
+                .why-section h2{font-size:2rem}
+                .why-grid{grid-template-columns:1fr;gap:16px}
+                .why-card{padding:20px 16px}
+                .why-card h3{font-size:1rem}
+                .why-card p{font-size:.85rem}
+                .reviews-section{padding:40px 20px}
+                .reviews-section h2{font-size:2rem}
+                .review-card{padding:20px 16px}
+                .final-cta{padding:60px 20px 80px}
+                .final-cta h2{font-size:clamp(1.6rem,7vw,2.4rem)}
+                .credit-banner{flex-direction:column;gap:10px;padding:20px 16px 80px;text-align:center}
+                .credit-banner img{height:80px;margin-left:0}
+        }
     /* ---- CREDIT BANNER ---- */
     .credit-banner{background:#111316;border-top:1px solid rgba(255,255,255,.07);padding:18px 24px 90px;display:flex;align-items:center;justify-content:center;gap:20px}
     .credit-banner span{font-size:.78rem;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;font-weight:500;white-space:nowrap}
