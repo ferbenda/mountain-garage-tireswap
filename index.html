@@ -300,6 +300,7 @@
     updateCountdown();setInterval(updateCountdown,1e3);
     var o=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting)e.target.classList.add("visible")})},{threshold:.1});
     document.querySelectorAll(".fade-in").forEach(function(e){o.observe(e)});
+    (function(){var hdr=document.querySelector('.sticky-header'),lastY=0;window.addEventListener('scroll',function(){var y=window.scrollY;hdr.classList.toggle('hide',y>lastY&&y>60);lastY=y;},{passive:true})}());
   </script>
 <script>
 (function(){
