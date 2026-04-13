@@ -149,6 +149,24 @@
     .credit-banner img{height:120px;opacity:.85;transition:opacity .2s;display:block;margin:0 auto}
     .credit-banner img:hover{opacity:1}
     </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '284403188942555');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=284403188942555&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -156,7 +174,7 @@
     <a href="https://www.mountaingarage.co" class="sticky-logo">
       <img src="https://www.mountaingarage.co/images/logo-white.png" alt="Mountain Garage" onerror="this.style.display='none'" /><span>Mountain Garage</span>
     </a>
-    <a href="tel:9708791143" class="sticky-phone" target="_blank" rel="noopener noreferrer">
+    <a href="tel:9708791143" onclick="fbq('track', 'Contact')" class="sticky-phone" target="_blank" rel="noopener noreferrer">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.07 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path></svg>
       <span>970-879-1143</span>
     </a>
@@ -168,8 +186,8 @@
     <h1>Spring Is Here.<br><em>Your Snow Tires Aren't.</em></h1>
     <p>Swap your winter tires for summer rubber at Steamboat's trusted shop&nbsp;&mdash;&nbsp;and <strong>save 10% this season only.</strong></p>
     <div class="hero-ctas">
-      <a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" class="btn-primary" target="_blank" rel="noopener noreferrer">&#128197; Book My Tire Swap &mdash; 10% Off</a>
-      <a href="tel:9708791143" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+      <a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" onclick="fbq('track', 'Lead')" class="btn-primary" target="_blank" rel="noopener noreferrer">&#128197; Book My Tire Swap &mdash; 10% Off</a>
+      <a href="tel:9708791143" onclick="fbq('track', 'Contact')" class="btn-secondary" target="_blank" rel="noopener noreferrer">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.07 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path></svg>
         Call 970-879-1143
       </a>
@@ -193,7 +211,7 @@
   </div>
 
   <!-- URGENCY STRIP -->
-  <div class="urgency-strip">Don't drive on winter tires past spring &mdash; it reduces their lifespan and affects handling.&nbsp;<a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" target="_blank" rel="noopener noreferrer">Book before slots fill up!</a></div>
+  <div class="urgency-strip">Don't drive on winter tires past spring &mdash; it reduces their lifespan and affects handling.&nbsp;<a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener noreferrer">Book before slots fill up!</a></div>
 
   <!-- WHAT'S INCLUDED -->
   <section class="included-section" style="position:relative;overflow:hidden">
@@ -264,15 +282,15 @@
       <h2 class="fade-in">Ready to Ride <em>Spring</em> Right?</h2>
       <p style="color:rgba(255,255,255,.7);margin-bottom:36px" class="fade-in">Same-day service available &mdash; Walk-ins welcome &mdash; All makes &amp; models</p>
       <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-        <a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" class="btn-primary fade-in" style="font-size:1.15rem;padding:18px 40px" target="_blank" rel="noopener noreferrer">&#128197; Book My Tire Swap &mdash; 10% Off</a>
-        <p class="final-cta-note fade-in">Or call us at <a href="tel:9708791143" target="_blank" rel="noopener noreferrer">970-879-1143</a> &mdash; Walk-ins welcome</p>
+        <a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" onclick="fbq('track', 'Lead')" class="btn-primary fade-in" style="font-size:1.15rem;padding:18px 40px" target="_blank" rel="noopener noreferrer">&#128197; Book My Tire Swap &mdash; 10% Off</a>
+        <p class="final-cta-note fade-in">Or call us at <a href="tel:9708791143" onclick="fbq('track', 'Contact')" target="_blank" rel="noopener noreferrer">970-879-1143</a> &mdash; Walk-ins welcome</p>
       </div>
     </div>
   </section>
 
   <footer>
     <p>&#169; 2026 Mountain Garage &mdash; 2101 Snow Bowl Plz, Steamboat Springs, CO 80487</p>
-    <p style="margin-top:6px"><a href="tel:9708791143" target="_blank" rel="noopener noreferrer">970-879-1143</a> &bull; <a href="https://www.mountaingarage.co">mountaingarage.co</a></p>
+    <p style="margin-top:6px"><a href="tel:9708791143" onclick="fbq('track', 'Contact')" target="_blank" rel="noopener noreferrer">970-879-1143</a> &bull; <a href="https://www.mountaingarage.co">mountaingarage.co</a></p>
   </footer>
   <!-- CREDIT BANNER -->
   <div class="credit-banner">
@@ -284,7 +302,7 @@
 
   <div class="sticky-bottom">
     <span class="sticky-bottom-text">&#128293; 10% Off | Spring Tire Swap</span>
-    <a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" target="_blank" rel="noopener noreferrer">Book Now</a>
+    <a href="https://book.squareup.com/appointments/zt1fznne0jdktg/location/LTHE49CJK2VNC/services" onclick="fbq('track', 'Lead')" target="_blank" rel="noopener noreferrer">Book Now</a>
   </div>
 
   <script>
